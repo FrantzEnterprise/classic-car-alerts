@@ -165,6 +165,27 @@
     .status-dot.green { background: var(--green); }
     .status-dot.yellow { background: #facc15; }
     .status-dot.red { background: #f87171; }
+    .qs-btn {
+      background: var(--surface2);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .qs-btn:active {
+      opacity: 0.7;
+      transform: scale(0.96);
+    }
+    .qs-btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
     .sms-input-row {
       display: flex;
       gap: 8px;
@@ -301,10 +322,16 @@
   <div class="card">
     <div class="card-title">Quick Search Links</div>
     <div style="display:flex;flex-wrap:wrap;gap:8px">
-      <button class="btn-secondary" style="width:auto;padding:10px 16px;font-size:13px" onclick="openFB()">📘 Facebook</button>
-      <button class="btn-secondary" style="width:auto;padding:10px 16px;font-size:13px" onclick="openCL()">📰 Craigslist</button>
-      <button class="btn-secondary" style="width:auto;padding:10px 16px;font-size:13px" onclick="openAT()">🏎️ AutoTempest</button>
-      <button class="btn-secondary" style="width:auto;padding:10px 16px;font-size:13px" onclick="openOfferUp()">📱 OfferUp</button>
+      <button class="qs-btn" onclick="openFB()">📘 Facebook</button>
+      <button class="qs-btn" onclick="openCL()">📰 Craigslist</button>
+      <button class="qs-btn" onclick="openEB()">🏛️ eBay</button>
+      <button class="qs-btn" onclick="openBat()">🏁 BaT</button>
+      <button class="qs-btn" onclick="openHem()">📜 Hemmings</button>
+      <button class="qs-btn" onclick="openCC()">🏆 ClassicCars</button>
+      <button class="qs-btn" onclick="openCG()">🚘 CarGurus</button>
+      <button class="qs-btn" onclick="openAT()">📊 AutoTempest</button>
+      <button class="qs-btn" onclick="openATrader()">🛞 AutoTrader</button>
+      <button class="qs-btn" onclick="openOfferUp()">📱 OfferUp</button>
     </div>
   </div>
 
@@ -505,11 +532,75 @@
       const q = [make, model, `${minYear}-${maxYear}`].filter(Boolean).join(' ');
       window.open(`https://sacramento.craigslist.org/search/cta?query=${encodeURIComponent(q)}&max_price=${maxPrice}&search_distance=${radius}&min_auto_year=${minYear}&max_auto_year=${maxYear}&sort=date`, '_blank');
     }
+    function openEB() {
+      const make = document.getElementById('make').value || 'classic';
+      const model = document.getElementById('model').value;
+      const minYear = document.getElementById('minYear').value;
+      const maxYear = document.getElementById('maxYear').value;
+      const maxPrice = document.getElementById('maxPrice').value;
+      const query = [make, model, `${minYear}-${maxYear}`, 'pre-1974'].filter(Boolean).join(' ');
+      const params = new URLSearchParams({
+        '_nkw': query,
+        'LH_ItemCondition': '4',
+        'rt': 'nc'
+      });
+      if (maxPrice) params.set('_udhi', maxPrice);
+      window.open(`https://www.ebay.com/sch/i.html?${params.toString()}`, '_blank');
+    }
+    function openBat() {
+      const make = document.getElementById('make').value || 'classic';
+      const model = document.getElementById('model').value;
+      const minYear = document.getElementById('minYear').value;
+      const maxYear = document.getElementById('maxYear').value;
+      const query = [make, model, `${minYear}-${maxYear}`].filter(Boolean).join(' ');
+      window.open(`https://bringatrailer.com/search/?s=${encodeURIComponent(query)}`, '_blank');
+    }
+    function openHem() {
+      const make = document.getElementById('make').value || 'classic';
+      const model = document.getElementById('model').value;
+      const minYear = document.getElementById('minYear').value;
+      const maxYear = document.getElementById('maxYear').value;
+      const query = [make, model].filter(Boolean).join(' ');
+      window.open(`https://www.hemmings.com/classifieds?year_start=${minYear}&year_end=${maxYear}&query=${encodeURIComponent(query)}&sort=date_desc`, '_blank');
+    }
+    function openCC() {
+      const make = document.getElementById('make').value || '';
+      const model = document.getElementById('model').value;
+      const minYear = document.getElementById('minYear').value;
+      const maxYear = document.getElementById('maxYear').value;
+      const query = [make, model].filter(Boolean).join(' ');
+      window.open(`https://classiccars.com/search/?q=${encodeURIComponent(query)}&year_from=${minYear}&year_to=${maxYear}`, '_blank');
+    }
+    function openCG() {
+      const make = document.getElementById('make').value || '';
+      const model = document.getElementById('model').value;
+      const minYear = document.getElementById('minYear').value;
+      const maxYear = document.getElementById('maxYear').value;
+      const query = [make, model].filter(Boolean).join(' ');
+      window.open(`https://www.cargurus.com/Cars/l-Used-${encodeURIComponent(query)}-d${minYear}_l${maxYear}`, '_blank');
+    }
     function openAT() {
-      window.open('https://www.autotempest.com/', '_blank');
+      const make = document.getElementById('make').value || '';
+      const model = document.getElementById('model').value;
+      const minYear = document.getElementById('minYear').value;
+      const maxYear = document.getElementById('maxYear').value;
+      const maxPrice = document.getElementById('maxPrice').value;
+      const query = [make, model].filter(Boolean).join(' ');
+      window.open(`https://www.autotempest.com/results?make=${encodeURIComponent(query)}&minyear=${minYear}&maxyear=${maxYear}&maxprice=${maxPrice}`, '_blank');
+    }
+    function openATrader() {
+      const make = document.getElementById('make').value || '';
+      const model = document.getElementById('model').value;
+      const minYear = document.getElementById('minYear').value;
+      const maxYear = document.getElementById('maxYear').value;
+      const maxPrice = document.getElementById('maxPrice').value;
+      const query = [make, model].filter(Boolean).join(' ');
+      window.open(`https://www.autotrader.com/cars-for-sale/all-cars/${encodeURIComponent(query.replace(/\s+/g,'-'))}/${minYear}-to-${maxYear}?searchRadius=200&maxPrice=${maxPrice}&sortBy=derivedpriceASC`, '_blank');
     }
     function openOfferUp() {
-      window.open('https://offerup.com/search/?q=classic+car', '_blank');
+      const minYear = document.getElementById('minYear').value;
+      const maxYear = document.getElementById('maxYear').value;
+      window.open(`https://offerup.com/search/?q=classic+car+${minYear}-${maxYear}`, '_blank');
     }
 
     // Init

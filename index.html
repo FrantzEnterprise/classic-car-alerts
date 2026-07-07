@@ -327,7 +327,7 @@
       <button class="qs-btn" onclick="openEB()">🏛️ eBay</button>
       <button class="qs-btn" onclick="openBat()">🏁 BaT</button>
       <button class="qs-btn" onclick="openHem()">📜 Hemmings</button>
-      <button class="qs-btn" onclick="openCC()">🏆 ClassicCars</button>
+      <button class="qs-btn" onclick="openJalopy()">🛻 Jalopy Journal</button>
       <button class="qs-btn" onclick="openCG()">🚘 CarGurus</button>
       <button class="qs-btn" onclick="openAT()">📊 AutoTempest</button>
       <button class="qs-btn" onclick="openATrader()">🛞 AutoTrader</button>
@@ -563,13 +563,13 @@
       const query = [make, model].filter(Boolean).join(' ');
       window.open(`https://www.hemmings.com/classifieds?year_start=${minYear}&year_end=${maxYear}&query=${encodeURIComponent(query)}&sort=date_desc`, '_blank');
     }
-    function openCC() {
+    function openJalopy() {
       const make = document.getElementById('make').value || '';
       const model = document.getElementById('model').value;
       const minYear = document.getElementById('minYear').value;
       const maxYear = document.getElementById('maxYear').value;
       const query = [make, model].filter(Boolean).join(' ');
-      window.open(`https://classiccars.com/search/?q=${encodeURIComponent(query)}&year_from=${minYear}&year_to=${maxYear}`, '_blank');
+      window.open(`https://www.jalopyjournal.com/?s=${encodeURIComponent(query + ' ' + minYear + ' ' + maxYear)}`, '_blank');
     }
     function openCG() {
       const make = document.getElementById('make').value || '';
